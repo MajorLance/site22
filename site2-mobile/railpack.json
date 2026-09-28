@@ -1,0 +1,7 @@
+{
+  "$schema": "https://railpack.com/schema.json",
+  "provider": "python",
+  "deploy": {
+    "startCommand": "python server.py"
+  }
+}
